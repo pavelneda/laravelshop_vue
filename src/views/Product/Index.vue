@@ -33,12 +33,15 @@ export default {
 
     methods: {
 
-        addToCard(id, single){
+        addToCard(product, single){
             let cart = localStorage.getItem('cart')
             let qty = single ? 1 : document.querySelector('.qtyValue').value;
 
             let newProduct = [{
-                'id': id,
+                'id': product.id,
+                'title': product.title,
+                'price': product.price,
+                'image_url': product.image_url,
                 'qty': qty,
             }]
 
@@ -47,9 +50,9 @@ export default {
             }else{
                 cart = JSON.parse(cart);
 
-                cart.forEach((product) => {
-                    if(product.id === id){
-                        product.qty = Number(product.qty) + Number(qty)
+                cart.forEach((productInCart) => {
+                    if(productInCart.id === product.id){
+                        productInCart.qty = Number(productInCart.qty) + Number(qty)
                         newProduct = null
                     }
                 })
@@ -350,7 +353,7 @@ export default {
                                                         <div class="products-grid-one__badge-box"> <span
                                                                 class="bg_base badge new ">New</span>
                                                         </div>
-                                                        <a @click.prevent="addToCard(product.id, true)" href="cart.html" class="addcart btn--primary style2">
+                                                        <a @click.prevent="addToCard(product, true)" href="cart.html" class="addcart btn--primary style2">
                                                             Add To Cart </a>
                                                         <div class="products-grid__usefull-links">
                                                             <ul>
@@ -450,7 +453,7 @@ export default {
                                                                                     <span class="increaseQty"> <i
                                                                                             class="flaticon-plus"></i>
                                                                                     </span></div>
-                                                                                <button @click.prevent="addToCard(popupProduct.id)" class="btn--primary "> Add to
+                                                                                <button @click.prevent="addToCard(popupProduct)" class="btn--primary "> Add to
                                                                                     Cart
                                                                                 </button>
                                                                             </div>
